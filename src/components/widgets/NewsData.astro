@@ -1,0 +1,30 @@
+---
+
+const response=await fetch('https://newsapi.org/v2/top-headlines?country=in&category=business&apiKey=f1fdffd7710f4351b7260ffa9affc760');
+const data=await response.json();
+const newsData=data.articles;
+
+---
+
+<Fragment>
+  <h2 class="text-3xl font-bold mb-4 text-center">Latest News</h2>
+  <div class="grid md:grid-cols-3 sm:grid-cols-2 gap-3 mt-2 mb-2">
+    {newsData.map((article, index) => (
+
+    <div class="border border-blue-200 rounded-2xl">
+      <div key={index} class="p-4"   >
+        <div class="overflow-hidden">
+        <img class="w-full h-40 object-cover" src={article.urlToImage ? article.urlToImage : "https://images.indianexpress.com/2023/04/What-is-Google-DeepMind.jpg?w=640"} alt={article.title} />
+        </div>
+        <h2 class="mt-2 text-lg font-semibold mb-2">{article.title}</h2>
+        <p class="text-lg text-gray-700 mb-2">{article.description && article.description.length > 150 ? `${article.description.slice(0,150)}...` : article.description }</p>
+        <a class=" inline-block mt-3 mb-2 rounded-full px-2 py-1 bg-red-500 text-gray-100 text-xl" href={article.url} target="_blank" rel="noopener noreferrer">
+          Read more
+        </a>
+       
+        <p class="text-sm text-gray-500 mt-2">Published at: {article.publishedAt}</p>
+      </div>
+    </div>
+    ))}
+  </div>
+</Fragment>
